@@ -11,7 +11,6 @@ module Links (
 ) where
 
 import Data.Monoid          (mconcat)
-import Context              (postContext)
 import Misc                 (TagsReader)
 import Control.Monad.Reader
 import Hakyll
@@ -19,12 +18,10 @@ import Hakyll
 -- Формируем страницу со ссылками 
 createPageWithExternalLinks :: TagsReader
 createPageWithExternalLinks = do
-    tagsAndAuthors <- ask
     lift $ create ["links.html"] $ do
         route idRoute
         compile $ do
-            let linksContext = mconcat [ postContext tagsAndAuthors
-                                       , constField "title" "Ссылки"                   
+            let linksContext = mconcat [ constField "linksTitle" "Ссылки"
                                        , defaultContext
                                        ]
 
