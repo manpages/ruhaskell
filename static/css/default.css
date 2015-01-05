@@ -376,3 +376,17 @@ pre.sourceCode {
     padding-bottom: 30px;
 }
 
+#gsc-iw-id1{
+    height: 30px;
+    border-color: #898989;
+}
+
+input.gsc-search-button-v2{
+    width: 71px;
+    height: 29px;
+}
+
+.gsc-search-button {
+    display: none;
+}
+

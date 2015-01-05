@@ -70,7 +70,7 @@ createPageWithAllTags = do
     lift $ createPageWithTagsCloud (fst tagsAndAuthors) 
                                    "tags.html" 
                                    110 
-                                   330 
+                                   220 
                                    "Темы публикаций"
                                    "tagsCloud"
                                    "templates/tags.html"
@@ -83,7 +83,7 @@ createPageWithAllAuthors = do
     lift $ createPageWithTagsCloud (snd tagsAndAuthors) 
                                    "authors.html" 
                                    110 
-                                   330 
+                                   220 
                                    "Наши авторы" 
                                    "authorsCloud" 
                                    "templates/authors.html"
