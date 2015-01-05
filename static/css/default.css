@@ -182,7 +182,7 @@ div#header #navigation a:hover {
 
 .footer {
     text-align: center;
-    padding-top: 40px;
+    padding-top: 30px;
     padding-bottom: 40px;
     font-size: 14px;
 }
@@ -199,7 +199,7 @@ div#hakyll_mark {
     padding-top: 4px;
 }
 
-div#tags_cloud {
+div#tagsCloud {
     font-family: 'Ubuntu Mono';
     text-align: center;
 }
@@ -254,12 +254,19 @@ h2 {
     padding-bottom: 10px;
 }
 
+h3 {
+    font-size: 20px !important;
+    text-align: center !important;
+    font-weight: 500 !important;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
 .post-info {
     color: #777;
     font-size: 16px;
     font-family: 'Ubuntu Mono', monospace;
     text-align: left;
-    padding-top: 15px;
     padding-bottom: 15px;
 }
 
@@ -316,8 +323,8 @@ a:hover {
 
 div#searchForm {
     text-align: center !important;
+    padding-top: 40px;
 }
-
 
 /* Loosely based on pygment's default colors */
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode, table.sourceCode pre 
