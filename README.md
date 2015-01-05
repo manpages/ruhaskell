@@ -76,5 +76,5 @@ URL этой статьи станет таким:
 
 ### Обратная связь
 
-Вопросы? Предложения? Критика? Вы можете задать их в нашем [чате](https://gitter.im/denisshevchenko/haskell), на форуме (скоро будет) или написать [лично мне](mailto:me@dshevchenko.biz).
+Вопросы? Предложения? Критика? Вы можете задать их в нашем [чате](https://gitter.im/denisshevchenko/haskell), на форуме (скоро будет), в [группе на Google+](https://plus.google.com/communities/117343381540538069054) или же написать [лично мне](mailto:me@dshevchenko.biz).
 
