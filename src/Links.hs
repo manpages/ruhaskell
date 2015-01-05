@@ -15,13 +15,14 @@ import Misc                 (TagsReader)
 import Control.Monad.Reader
 import Hakyll
 
--- Формируем страницу со ссылками 
+-- Формируем страницу с внешними ссылками на всякие полезные вещи.
 createPageWithExternalLinks :: TagsReader
 createPageWithExternalLinks = do
     lift $ create ["links.html"] $ do
         route idRoute
         compile $ do
             let linksContext = mconcat [ constField "linksTitle" "Ссылки"
+                                       , constField "title" "Ссылки"
                                        , defaultContext
                                        ]
 
