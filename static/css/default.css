@@ -390,3 +390,25 @@ input.gsc-search-button-v2{
     display: none;
 }
 
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background-color: #F5F3EE;
+    color: #000;
+}
+
+.custom-tabs {
+    margin-bottom: 35px;
+}
+
+.links-divider {
+    padding-top: 6px;
+}
+
+.links-group-title {
+    font-size: 20px;
+    padding-bottom: 15px;
+}
+
+.links-indent {
+    padding-left: 15px;
+}
+

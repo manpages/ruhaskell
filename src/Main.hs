@@ -21,6 +21,7 @@ import XMLMap               (createXMLMap)
 import Archive              (createPageWithAllPosts)
 import Misc                 (prepareAllTemplates)
 import IndexPage            (createIndexPage)
+import Links                (createPageWithExternalLinks)
 import Control.Monad.Reader (runReaderT)
 import Hakyll
 
@@ -47,5 +48,6 @@ main = hakyll $ do
                 >> convertAuthorsToLinks
                 >> createXMLMap
                 >> setupRSSFeed
-                >> createIndexPage) (tags, authors)
+                >> createIndexPage
+                >> createPageWithExternalLinks) (tags, authors)
 

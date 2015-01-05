@@ -27,7 +27,8 @@ executable ruHaskell
                        Tags  
                        XMLMap  
                        Archive  
-                       IndexPage 
+                       IndexPage
+                       Links
                        Misc 
 
   other-extensions:    OverloadedStrings
