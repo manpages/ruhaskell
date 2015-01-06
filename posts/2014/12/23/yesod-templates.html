@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -20,8 +21,13 @@
         
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
+        <script>
+          window.___gcfg = {
+            lang: 'ru'
+          };
+        </script>
+
         <script src="https://apis.google.com/js/platform.js" async defer>
-            {lang: 'ru'}
         </script>
         
         <script src="../../../../static/js/default.js"></script>
@@ -137,7 +143,7 @@
 <span class="kw">&lt;/div&gt;</span></code></pre>
 <p>А теперь о деталях.</p>
 <h3 id="теги">Теги</h3>
-<p>Как вы заметили, в Hamlet-коде не нужно закрывать теги, это будет сделано за нас аватоматически. И на мой взгляд, это чрезвычайно удобно. Ведь если не нужно вручную закрывать тег, то мы не сможем ни забыть этого сделать, ни сделать это криво. Взгляните:</p>
+<p>Как вы заметили, в Hamlet-коде не нужно закрывать теги, это будет сделано за нас автоматически. И на мой взгляд, это чрезвычайно удобно. Ведь если не нужно вручную закрывать тег, то мы не сможем ни забыть этого сделать, ни сделать это криво. Взгляните:</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;div</span> <span class="er">.register</span><span class="kw">&gt;</span>
     <span class="kw">&lt;div</span> <span class="er">.just-centered</span><span class="kw">&gt;</span>
         <span class="kw">&lt;h4&gt;</span>Ещё нет профиля?
@@ -249,7 +255,7 @@ article a <span class="kw">{</span> <span class="kw">text-decoration:</span> <sp
                 s.parentNode.insertBefore(gcse, s);
               })();
             </script>
-            <gcse:search></gcse:search>
+            <div class="gcse-search"></div>
         </div>
 
         <footer class="footer">

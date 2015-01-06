@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -20,8 +21,13 @@
         
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
+        <script>
+          window.___gcfg = {
+            lang: 'ru'
+          };
+        </script>
+
         <script src="https://apis.google.com/js/platform.js" async defer>
-            {lang: 'ru'}
         </script>
         
         <script src="../../../../static/js/default.js"></script>
@@ -126,7 +132,7 @@
 <div style="padding-top: 20px;"></div>
 
 <p>Приветствую!</p>
-<p>Говорить о разработке веб-приложения, не упомянув о его конечном разворачивании (deployment) - это так же асбурдно, как изучать работу с браузером на компьютере, не подключенном к интернету. Вот об этом мы сегодня и поговорим.</p>
+<p>Говорить о разработке веб-приложения, не упомянув о его конечном разворачивании (deployment) - это так же абсурдно, как изучать работу с браузером на компьютере, не подключенном к интернету. Вот об этом мы сегодня и поговорим.</p>
 <p>Развернуть Yesod-приложение можно двумя базовыми способами: с использованием <a href="https://github.com/snoyberg/keter/">Keter</a> и без него. И хотя автор Yesod позиционирует Keter как умолчальный инструмент для разворачивания, в этой заметке мы рассмотрим “сырое” разворачивание, без Keter или каких-либо иных сторонних средств.</p>
 <p>Описываемый ниже способ предельно прост, прозрачен, однако не лишён недостатков.</p>
 <h2 id="сценарий">Сценарий</h2>
@@ -252,7 +258,7 @@ $ <span class="kw">bin/webhs-alpha</span> Development</code></pre>
                 s.parentNode.insertBefore(gcse, s);
               })();
             </script>
-            <gcse:search></gcse:search>
+            <div class="gcse-search"></div>
         </div>
 
         <footer class="footer">
