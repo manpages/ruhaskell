@@ -2,29 +2,29 @@
 
 # Скрипт для для автоматического обновления сайта на GitHub Pages. 
 
-USAGE="Запускаем так: ./deploy.sh \"Сообщение о коммите\" 
+USAGE="Запускаем так: ./deploy.sh [\"Сообщение о коммите\"]
 
 Пример:
   ./deploy.sh \"Обновление стиля.\"
+  ./deploy.sh
+
+Во втором случае разворачивание происходит без коммита, это удобно при pull request.
 " 
 
 # При любой ошибке скрипт вылетает...
 set -e
 
-# Проверяем наличие коммит-сообщения...  
-if [ "$1" = "" ]
-then
-    echo "А сообщение о коммите где?" 
-    echo "$USAGE" 
-    exit 1
-fi
-
 # Устанавливаем переменную, для нашего коммит-сообщения...  
 COMMIT_MESSAGE=$1
 
-echo "Заливаем в мастер..."
-git commit -a -m "$COMMIT_MESSAGE"
-git push -f origin master
+echo "Учитываем изменения в ветке master, если таковые имеются..."
+if [ "$1" != "" ]
+then
+    # Сообщение о коммите задано, значит коммитим изменения в ветку master...
+    git add .
+    git commit -a -m "$COMMIT_MESSAGE"
+    git push -f origin master
+fi
 
 echo "Собираем новую версию сайта..."
 ./just_build.sh
@@ -39,12 +39,14 @@ git checkout gh-pages
 echo "Копируем прямо в корень содержимое подготовленного каталога _site..."
 cp -R /tmp/_site/* .
 
-echo "Учитываем все последние новшества..."
-git add .
-git commit -a -m "$COMMIT_MESSAGE"
-
-echo "Заливаем на GitHub Pages..."
-git push -f origin gh-pages
+echo "Учитываем все последние новшества, если таковые имеются, и публикуем на GitHub Pages..."
+if [ "$1" != "" ]
+then
+    # Сообщение о коммите задано, следовательно в ветке gh-pages тоже произошли изменения...
+    git add .
+    git commit -a -m "$COMMIT_MESSAGE"
+    git push -f origin gh-pages
+fi
 
 echo "Возвращаемся в мастер..."
 git checkout master
