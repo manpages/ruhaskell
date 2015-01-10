@@ -45,8 +45,9 @@ getNameOfAuthor identifier = do
 -- Имена категорий извлекаются из файлового пути, поэтому они всегда английские.
 -- Это не очень красиво, поэтому мы формируем словарь русских имён для категорий.
 russianNamesOfCategories :: M.Map String String
-russianNamesOfCategories = M.fromList[ ("web",   "Веб")
-                                     , ("tasks", "Задачи")
+russianNamesOfCategories = M.fromList[ ("web",      "Веб")
+                                     , ("tasks",    "Задачи")
+                                     , ("projects", "Проекты")
                                      ]
 
 getRussianNameOfCategory :: String -> String
