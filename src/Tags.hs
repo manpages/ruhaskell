@@ -32,7 +32,7 @@ buildPostsTags = buildTags "posts/**" $ fromCapture "tags/*.html" . urlEncode
 
 -- Функция определяет категорию, к которой относится статья.
 buildPostsCategories :: MonadMetadata m => m Tags
-buildPostsCategories = buildCategories "posts/**" $ fromCapture "categories/*.html" . urlEncode
+buildPostsCategories = buildCategories "posts/**" $ fromCapture "categories/*.html"
 
 -- Функция извлекает из всех статей значения поля author и собирает их в кучу.
 -- Функция urlEncode необходима для корректного формирования неанглийских имён авторов.
