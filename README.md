@@ -94,7 +94,7 @@ URL этой статьи станет таким:
 $ git clone git@github.com:denisshevchenko/ruhaskell.git
 $ cd ruhaskell
 $ cabal sandbox init
-$ cabal install hakyll
+$ cabal install --only-dependencies
 $ ./just_build.sh
 ```
 
