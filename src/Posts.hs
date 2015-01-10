@@ -34,7 +34,7 @@ createPosts :: TagsReader
 createPosts = do
     tagsAndAuthors <- ask
     -- Берём все файлы из каталога posts.
-    lift $ match "posts/*" $ do
+    lift $ match "posts/**" $ do
         route $ directorizeDate `composeRoutes`
                 setExtension "html"
         -- Для превращения Markdown в HTML используем pandocCompiler.

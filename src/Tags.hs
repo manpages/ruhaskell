@@ -9,9 +9,12 @@
 module Tags (
     buildPostsTags,
     buildPostsAuthors,
+    buildPostsCategories,
     createPageWithAllTags,
     createPageWithAllAuthors,
+    createPageWithAllCategories,
     convertTagsToLinks,
+    convertCategoriesToLinks,
     convertAuthorsToLinks
 ) where
 
@@ -25,12 +28,16 @@ import Hakyll
 -- Функция извлекает из всех статей значения поля tags и собирает их в кучу.
 -- Функция urlEncode необходима для корректного формирования неанглийских меток.
 buildPostsTags :: MonadMetadata m => m Tags
-buildPostsTags = buildTags "posts/*" $ fromCapture "tags/*.html" . urlEncode
+buildPostsTags = buildTags "posts/**" $ fromCapture "tags/*.html" . urlEncode
+
+-- Функция определяет категорию, к которой относится статья.
+buildPostsCategories :: MonadMetadata m => m Tags
+buildPostsCategories = buildCategories "posts/**" $ fromCapture "categories/*.html" . urlEncode
 
 -- Функция извлекает из всех статей значения поля author и собирает их в кучу.
 -- Функция urlEncode необходима для корректного формирования неанглийских имён авторов.
 buildPostsAuthors :: MonadMetadata m => m Tags
-buildPostsAuthors = buildTagsWith getNameOfAuthor "posts/*" $ fromCapture "authors/*.html" . urlEncode
+buildPostsAuthors = buildTagsWith getNameOfAuthor "posts/**" $ fromCapture "authors/*.html" . urlEncode
 
 -- Вспомогательная функция, формирующая страницу с облаком определённых тегов.
 createPageWithTagsCloud :: Tags 
@@ -67,7 +74,7 @@ createPageWithTagsCloud specificTags
 createPageWithAllTags :: TagsReader
 createPageWithAllTags = do
     tagsAndAuthors <- ask
-    lift $ createPageWithTagsCloud (fst tagsAndAuthors) 
+    lift $ createPageWithTagsCloud (tagsAndAuthors !! 0) 
                                    "tags.html" 
                                    110 
                                    220 
@@ -76,11 +83,24 @@ createPageWithAllTags = do
                                    "templates/tags.html"
     return ()
 
+-- Формируем страницу с облаком категорий.
+createPageWithAllCategories :: TagsReader
+createPageWithAllCategories = do
+    tagsAndAuthors <- ask
+    lift $ createPageWithTagsCloud (tagsAndAuthors !! 1) 
+                                   "categories.html" 
+                                   110 
+                                   220 
+                                   "Категории публикаций" 
+                                   "categoriesCloud" 
+                                   "templates/categories.html"
+    return ()
+
 -- Формируем страницу с облаком авторов публикаций.
 createPageWithAllAuthors :: TagsReader
 createPageWithAllAuthors = do
     tagsAndAuthors <- ask
-    lift $ createPageWithTagsCloud (snd tagsAndAuthors) 
+    lift $ createPageWithTagsCloud (tagsAndAuthors !! 2) 
                                    "authors.html" 
                                    110 
                                    220 
@@ -108,13 +128,22 @@ convertSpecificTagsToLinks tagsAndAuthors specificTags aTitle =
                         >>= loadAndApplyTemplate "templates/default.html" taggedPostsContext
                         >>= relativizeUrls
 
--- Делаем тематические теги ссылками, что позволит отфильтровать статьи по темам.
+-- Делаем тематические теги ссылками, что позволит отфильтровать статьи по тегам.
 convertTagsToLinks :: TagsReader
 convertTagsToLinks = do
     tagsAndAuthors <- ask
     lift $ convertSpecificTagsToLinks tagsAndAuthors 
-                                      (fst tagsAndAuthors) 
+                                      (tagsAndAuthors !! 0)
                                       "Все статьи по теме"
+    return ()
+
+-- Делаем названия категорий ссылками, что позволит отфильтровать статьи по категориям.
+convertCategoriesToLinks :: TagsReader
+convertCategoriesToLinks = do
+    tagsAndAuthors <- ask
+    lift $ convertSpecificTagsToLinks tagsAndAuthors 
+                                      (tagsAndAuthors !! 1)
+                                      "Все статьи в категории"
     return ()
 
 -- Делаем имена авторов ссылками, что позволит отфильтровать статьи по авторам.
@@ -122,7 +151,7 @@ convertAuthorsToLinks :: TagsReader
 convertAuthorsToLinks = do
     tagsAndAuthors <- ask
     lift $ convertSpecificTagsToLinks tagsAndAuthors 
-                                      (snd tagsAndAuthors) 
+                                      (tagsAndAuthors !! 2)
                                       "Все статьи автора"
     return ()
 

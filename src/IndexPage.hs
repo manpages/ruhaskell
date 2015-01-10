@@ -23,7 +23,7 @@ createIndexPage = do
         route idRoute
         compile $ do
             -- На главной странице будет отражено 7 последних публикаций.
-            last7Posts <- fmap (take 7) . recentFirst =<< loadAll "posts/*"
+            last7Posts <- fmap (take 7) . recentFirst =<< loadAll "posts/**"
             let indexContext = mconcat [ listField "posts" (postContext tagsAndAuthors) (return last7Posts) 
                                        , constField "title" "Русскоязычное сообщество Haskell-разработчиков"
                                        , defaultContext

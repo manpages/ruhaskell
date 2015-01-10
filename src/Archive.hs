@@ -22,7 +22,7 @@ createPageWithAllPosts = do
     lift $ create ["archive.html"] $ do
         route idRoute
         compile $ do
-            allPosts <- recentFirst =<< loadAll "posts/*"
+            allPosts <- recentFirst =<< loadAll "posts/**"
             let archiveContext = mconcat [ listField "posts" (postContext tagsAndAuthors) (return allPosts) 
                                          , constField "title" "Архив статей"                   
                                          , defaultContext

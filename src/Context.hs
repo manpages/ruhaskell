@@ -13,7 +13,9 @@ module Context (
 import Data.Monoid      (mconcat)
 import Data.List        (intersperse)
 import System.Locale    
-import Misc             (aHost, TagsAndAuthors, getNameOfAuthor)
+import Misc             (aHost, 
+                         TagsAndAuthors,
+                         getNameOfAuthor)
 
 import qualified Text.Blaze.Html5               as H
 import qualified Text.Blaze.Html5.Attributes    as A
@@ -56,8 +58,9 @@ ruTimeLocale =  TimeLocale { wDays  = []
 postContext :: TagsAndAuthors -> Context String
 postContext tagsAndAuthors = mconcat [ constField "host" aHost
                                      , dateFieldWith ruTimeLocale "date" "%d %B %Y"
-                                     , tagsField "postTags" $ fst tagsAndAuthors
-                                     , authorField "postAuthor" $ snd tagsAndAuthors
+                                     , tagsField "postTags" $ tagsAndAuthors !! 0
+                                     , categoryField "postCategory" $ tagsAndAuthors !! 1
+                                     , authorField "postAuthor" $ tagsAndAuthors !! 2
                                      , defaultContext
                                      ]
 

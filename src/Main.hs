@@ -11,12 +11,15 @@ module Main where
 import Copiers              (justCopy, justCreateAndCopy, justCompressAndCopy)
 import RSSFeed              (setupRSSFeed)
 import Posts                (createPosts)
-import Tags                 (createPageWithAllTags, 
+import Tags                 (createPageWithAllTags,
+                             createPageWithAllCategories,
+                             createPageWithAllAuthors,
                              convertTagsToLinks,
+                             convertCategoriesToLinks,
                              convertAuthorsToLinks,
                              buildPostsTags,
                              buildPostsAuthors,
-                             createPageWithAllAuthors)
+                             buildPostsCategories)
 import XMLMap               (createXMLMap)
 import Archive              (createPageWithAllPosts)
 import Misc                 (prepareAllTemplates)
@@ -35,19 +38,22 @@ main = hakyll $ do
     
     prepareAllTemplates
     
-    -- Извлекаем тематические теги, а также имена авторов из всех публикаций.
-    tags <- buildPostsTags
-    authors <- buildPostsAuthors
+    -- Извлекаем названия тегов, категорий, а также имена авторов из всех публикаций.
+    tags        <- buildPostsTags
+    categories  <- buildPostsCategories 
+    authors     <- buildPostsAuthors
 
     -- Теги и имена авторов нужны всем, поэтому для удобства запускаем читателя.
     runReaderT (createPosts
                 >> createPageWithAllPosts
                 >> createPageWithAllTags
+                >> createPageWithAllCategories
                 >> createPageWithAllAuthors
                 >> convertTagsToLinks
+                >> convertCategoriesToLinks
                 >> convertAuthorsToLinks
                 >> createXMLMap
                 >> setupRSSFeed
                 >> createIndexPage
-                >> createPageWithExternalLinks) (tags, authors)
+                >> createPageWithExternalLinks) [tags, categories, authors]
 

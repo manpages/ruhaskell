@@ -36,7 +36,7 @@ setupRSSFeed = do
                                       , constField "description" ""
                                       ]
             -- Учитываем 10 последних статей.
-            last10Posts <- fmap (take 10) . recentFirst =<< loadAll "posts/*"
+            last10Posts <- fmap (take 10) . recentFirst =<< loadAll "posts/**"
             renderRss feedConfiguration 
                       feedContext 
                       last10Posts

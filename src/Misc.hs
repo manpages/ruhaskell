@@ -26,8 +26,8 @@ aHost = "http://haskell.dshevchenko.biz/"
 prepareAllTemplates :: Rules ()
 prepareAllTemplates = match "templates/*" $ compile templateCompiler
 
--- Читательское "облако" с тематическими тегами и с именами авторов статей.
-type TagsAndAuthors = (Tags, Tags)
+-- Читательское "облако" с тематическими тегами, категориями и именами авторов статей.
+type TagsAndAuthors = [Tags]
 type TagsReader = ReaderT TagsAndAuthors Rules ()
 
 -- Извлекает из статьи значение атрибута `author`.

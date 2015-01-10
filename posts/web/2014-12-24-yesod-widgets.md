@@ -1,7 +1,7 @@
 ---
 author:         Денис Шевченко
 title:          Yesod: виджеты
-tags:           Yesod, веб
+tags:           Yesod
 description:    Yesod - это мощный веб-фреймворк, написанный на языке Haskell. Сегодня поговорим о важной концепции Yesod - о виджете.
 ---
 

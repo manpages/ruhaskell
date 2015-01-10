@@ -1,7 +1,7 @@
 ---
 author:         Алексей Пирогов
 title:          "Ёлочка"
-tags:           задача
+tags:           ёлочка
 description:    Данная задача представляет собой одну из множества задач, задаваемых время от времени начинающим разработчикам на собеседованиях.
 hrefToOriginal: https://www.fpcomplete.com/user/astynax/basics/pine-tree
 ---

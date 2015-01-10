@@ -23,7 +23,7 @@ createXMLMap = do
     lift $ create ["sitemap.xml"] $ do
         route idRoute
         compile $ do
-            allPosts <- recentFirst =<< loadAll "posts/*"
+            allPosts <- recentFirst =<< loadAll "posts/**"
             let sitemapContext = mconcat [ listField "entries" (postContext tagsAndAuthors) (return allPosts)
                                          , constField "host" aHost
                                          , defaultContext
