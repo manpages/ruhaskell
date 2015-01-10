@@ -198,12 +198,6 @@ div#social {
     font-size: 16px;
 }
 
-div#hakyll_mark {
-    text-align: right; 
-    font-size: 16px;
-    padding-top: 4px;
-}
-
 div#tagsCloud {
     font-family: 'Ubuntu Mono';
     text-align: center;
