@@ -19,10 +19,13 @@ module Tags (
 ) where
 
 import Data.Monoid          (mconcat)
-import Data.List            (intersperse)
+import Data.List            (intersperse, isInfixOf)
 import Network.HTTP         (urlEncode)
 import Context              (postContext)
-import Misc                 (TagsReader, TagsAndAuthors, getNameOfAuthor)
+import Misc                 (TagsReader,
+                             TagsAndAuthors,
+                             getNameOfAuthor,
+                             getRussianNameOfCategory)
 import Control.Monad.Reader
 
 import           Text.Blaze.Html                 (toValue, (!))
@@ -71,17 +74,54 @@ createTagLinkWithBadge smallestFontSizeInPercent
         -- Формируем стандартный тег <a href...>
         H.a ! A.style (toValue $ "font-size: " ++ show size ++ "%")
             ! A.href (toValue url)
-            $ H.preEscapedToHtml (tag ++ "<span class=\"badge-for-tag-link\">" ++ (show count) ++ "</span>")
+            $ H.preEscapedToHtml $ tag 
+                                   ++ "<span class=\"badge-for-tag-link\">" 
+                                   ++ (show count) 
+                                   ++ "</span>"
+
+-- Отрисовываем тег для категории, с заменой родного английского названия русским аналогом.
+createRussianTagLinkWithBadge :: Double 
+                              -> Double 
+                              -> String
+                              -> String
+                              -> Int 
+                              -> Int
+                              -> Int
+                              -> String
+createRussianTagLinkWithBadge smallestFontSizeInPercent 
+                              biggestFontSizeInPercent
+                              tag
+                              url
+                              count
+                              min'
+                              max' = 
+    let diff     = 1 + fromIntegral max' - fromIntegral min'
+        relative = (fromIntegral count - fromIntegral min') / diff
+        size     = floor $ smallestFontSizeInPercent + relative * (biggestFontSizeInPercent - smallestFontSizeInPercent) :: Int
+    in renderHtml $
+        -- Формируем стандартный тег <a href...>
+        H.a ! A.style (toValue $ "font-size: " ++ show size ++ "%")
+            ! A.href (toValue url)
+            $ H.preEscapedToHtml $ (getRussianNameOfCategory tag) 
+                                   ++ "<span class=\"badge-for-tag-link\">" 
+                                   ++ (show count) 
+                                   ++ "</span>"
 
 -- Отрисовываем облако с тегами-ссылками, имеющими количественные значки.
 renderTagCloudWithBadges :: Double
                          -> Double
                          -> Tags
+                         -> Bool
                          -> Compiler String
 renderTagCloudWithBadges smallestFontSizeInPercent
                          biggestFontSizeInPercent
-                         specificTags = 
-    renderTagCloudWith createTagLinkWithBadge
+                         specificTags
+                         thisIsCategoriesCloud =    
+    let tagLinkRenderer = if thisIsCategoriesCloud 
+                          then createRussianTagLinkWithBadge 
+                          else createTagLinkWithBadge
+    in
+    renderTagCloudWith tagLinkRenderer
                        concatenateLinksWithSpaces
                        smallestFontSizeInPercent
                        biggestFontSizeInPercent
@@ -109,7 +149,8 @@ createPageWithTagsCloud specificTags
         compile $ do
             let renderedCloud = \_ -> renderTagCloudWithBadges smallestFontSizeInPercent 
                                                                biggestFontSizeInPercent
-                                                               specificTags 
+                                                               specificTags
+                                                               ("Категории" `isInfixOf` pageTitle)
                 tagsContext = mconcat [ constField "title" pageTitle 
                                       , field cloudName renderedCloud
                                       , defaultContext
@@ -164,7 +205,8 @@ convertSpecificTagsToLinks :: TagsAndAuthors
                            -> Rules ()
 convertSpecificTagsToLinks tagsAndAuthors specificTags aTitle = 
     tagsRules specificTags $ \tag pattern -> do
-        let title = aTitle ++ " `" ++ tag ++ "`"
+        let nameOfTag = if "категории" `isInfixOf` aTitle then (getRussianNameOfCategory tag) else tag
+            title = aTitle ++ " `" ++ nameOfTag ++ "`"
         route idRoute
         compile $ do
             posts <- recentFirst =<< loadAll pattern

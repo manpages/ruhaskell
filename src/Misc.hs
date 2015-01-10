@@ -11,7 +11,8 @@ module Misc (
     prepareAllTemplates,
     getNameOfAuthor,
     TagsAndAuthors,
-    TagsReader
+    TagsReader,
+    getRussianNameOfCategory
 ) where
 
 import Control.Monad.Reader
@@ -40,4 +41,17 @@ getNameOfAuthor identifier = do
         -- Поразумевается, что у статьи всегда один автор, а не несколько.
         Nothing -> ["Не указан"]
         Just nameOfAuthor -> [trim nameOfAuthor]
+
+-- Имена категорий извлекаются из файлового пути, поэтому они всегда английские.
+-- Это не очень красиво, поэтому мы формируем словарь русских имён для категорий.
+russianNamesOfCategories :: M.Map String String
+russianNamesOfCategories = M.fromList[ ("web",   "Веб")
+                                     , ("tasks", "Задачи")
+                                     ]
+
+getRussianNameOfCategory :: String -> String
+getRussianNameOfCategory englishName = 
+    case (M.lookup englishName russianNamesOfCategories) of
+        Nothing   -> englishName
+        Just name -> name
 
