@@ -429,3 +429,33 @@ input.gsc-search-button-v2{
     padding-left: 15px;
 }
 
+.archive-link {
+    color: #777;
+    margin-right: 9px;
+}
+
+.tags-link {
+    color: #777;
+    margin-right: 7px;
+}
+
+.categories-link {
+    color: #777;
+    margin-right: 9px;
+}
+
+.authors-link {
+    color: #777;
+    margin-right: 7px;
+}
+
+.forum-link {
+    color: #777;
+    margin-right: 7px;
+}
+
+.chat-link {
+    color: #777;
+    margin-right: 10px;
+}
+
