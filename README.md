@@ -98,7 +98,7 @@ $ cabal install hakyll
 $ ./just_build.sh
 ```
 
-После этого откройте в браузере страницу `ruhaskell/\_site/index.html`.
+После этого откройте в браузере страницу `ruhaskell/_site/index.html`.
 
 ### Обратная связь
 
