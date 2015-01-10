@@ -86,6 +86,20 @@ URL этой статьи станет таким:
 
 Посколько Git не любит пустые каталоги, тематические подкаталоги будут создаваться по мере написания статей.
 
+### Локальная сборка
+
+Вы можете собрать сайт локально. Подразумевается, что [Haskell Platform](https://www.haskell.org/platform/) у вас уже установлена. Итак:
+
+```bash
+$ git clone git@github.com:denisshevchenko/ruhaskell.git
+$ cd ruhaskell
+$ cabal sandbox init
+$ cabal install hakyll
+$ ./just_build.sh
+```
+
+После этого откройте в браузере страницу `ruhaskell/\_site/index.html`.
+
 ### Обратная связь
 
 Вопросы? Предложения? Критика? Вы можете задать их в нашем [чате](https://gitter.im/denisshevchenko/haskell), на форуме (скоро будет), в [группе на Google+](https://plus.google.com/communities/117343381540538069054) или же написать [лично мне](mailto:me@dshevchenko.biz).
