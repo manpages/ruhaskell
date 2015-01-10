@@ -19,10 +19,17 @@ module Tags (
 ) where
 
 import Data.Monoid          (mconcat)
+import Data.List            (intersperse)
 import Network.HTTP         (urlEncode)
 import Context              (postContext)
 import Misc                 (TagsReader, TagsAndAuthors, getNameOfAuthor)
 import Control.Monad.Reader
+
+import           Text.Blaze.Html                 (toHtml, toValue, (!))
+import           Text.Blaze.Html.Renderer.String (renderHtml)
+import qualified Text.Blaze.Html5                as H
+import qualified Text.Blaze.Html5.Attributes     as A
+
 import Hakyll
 
 -- Функция извлекает из всех статей значения поля tags и собирает их в кучу.
@@ -38,6 +45,48 @@ buildPostsCategories = buildCategories "posts/**" $ fromCapture "categories/*.ht
 -- Функция urlEncode необходима для корректного формирования неанглийских имён авторов.
 buildPostsAuthors :: MonadMetadata m => m Tags
 buildPostsAuthors = buildTagsWith getNameOfAuthor "posts/**" $ fromCapture "authors/*.html" . urlEncode
+
+-- Функция отрисовывает тег-ссылку вместе со значком, отражающим количество публикаций,
+-- соответствующих данному тегу. Например, количество статей данного автора.
+-- За основу взяты исходники Hakyll.
+createTagLinkWithBadge :: Double 
+                       -> Double 
+                       -> String
+                       -> String
+                       -> Int 
+                       -> Int
+                       -> Int
+                       -> String
+createTagLinkWithBadge smallestFontSizeInPercent 
+                       biggestFontSizeInPercent
+                       tag
+                       url
+                       count
+                       min'
+                       max' = 
+    let diff     = 1 + fromIntegral max' - fromIntegral min'
+        relative = (fromIntegral count - fromIntegral min') / diff
+        size     = floor $ smallestFontSizeInPercent + relative * (biggestFontSizeInPercent - smallestFontSizeInPercent) :: Int
+    in renderHtml $
+        -- Формируем стандартный тег <a href...>
+        H.a ! A.style (toValue $ "font-size: " ++ show size ++ "%")
+            ! A.href (toValue url)
+            $ H.preEscapedToHtml (tag ++ "<span class=\"badge-for-tag-link\">" ++ (show count) ++ "</span>")
+
+-- Отрисовываем облако с тегами-ссылками, имеющими количественные значки.
+renderTagCloudWithBadges :: Double
+                         -> Double
+                         -> Tags
+                         -> Compiler String
+renderTagCloudWithBadges smallestFontSizeInPercent
+                         biggestFontSizeInPercent
+                         specificTags = 
+    renderTagCloudWith createTagLinkWithBadge
+                       concatenateLinksWithSpaces
+                       smallestFontSizeInPercent
+                       biggestFontSizeInPercent
+                       specificTags
+    where concatenateLinksWithSpaces = concat . intersperse " "
 
 -- Вспомогательная функция, формирующая страницу с облаком определённых тегов.
 createPageWithTagsCloud :: Tags 
@@ -58,9 +107,9 @@ createPageWithTagsCloud specificTags
     create [pageWithSpecificTags] $ do
         route idRoute
         compile $ do
-            let renderedCloud = \_ -> renderTagCloud smallestFontSizeInPercent 
-                                                     biggestFontSizeInPercent
-                                                     specificTags 
+            let renderedCloud = \_ -> renderTagCloudWithBadges smallestFontSizeInPercent 
+                                                               biggestFontSizeInPercent
+                                                               specificTags 
                 tagsContext = mconcat [ constField "title" pageTitle 
                                       , field cloudName renderedCloud
                                       , defaultContext

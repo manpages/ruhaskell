@@ -459,3 +459,14 @@ input.gsc-search-button-v2{
     margin-right: 10px;
 }
 
+.badge-for-tag-link {
+    font-size: 65%;
+    border-radius: 11px;
+    border: 1px solid #888;
+    background: none repeat scroll 0% 0% #999;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-left: 4px;
+    color: #fff;
+}
+
