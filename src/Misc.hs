@@ -20,7 +20,7 @@ import Hakyll
 
 -- Данный URL останется актуальным до тех пор, пока сайт будет жить на GitHub Pages.
 aHost :: String
-aHost = "http://haskell.dshevchenko.biz/"
+aHost = "http://haskell.dshevchenko.biz"
 
 -- Готовим все шаблоны из каталога templates.
 prepareAllTemplates :: Rules ()
