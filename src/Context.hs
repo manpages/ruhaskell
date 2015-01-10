@@ -12,8 +12,6 @@ module Context (
 
 import Data.Monoid      (mconcat)
 import Data.List        (intersperse)
-import Data.Maybe       (fromJust)
-import qualified Data.Map as M
 import System.Locale    
 import Misc             (aHost, 
                          TagsAndAuthors,
