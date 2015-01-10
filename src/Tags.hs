@@ -25,7 +25,7 @@ import Context              (postContext)
 import Misc                 (TagsReader, TagsAndAuthors, getNameOfAuthor)
 import Control.Monad.Reader
 
-import           Text.Blaze.Html                 (toHtml, toValue, (!))
+import           Text.Blaze.Html                 (toValue, (!))
 import           Text.Blaze.Html.Renderer.String (renderHtml)
 import qualified Text.Blaze.Html5                as H
 import qualified Text.Blaze.Html5.Attributes     as A
@@ -86,7 +86,7 @@ renderTagCloudWithBadges smallestFontSizeInPercent
                        smallestFontSizeInPercent
                        biggestFontSizeInPercent
                        specificTags
-    where concatenateLinksWithSpaces = concat . intersperse " "
+    where concatenateLinksWithSpaces = concat . intersperse ", "
 
 -- Вспомогательная функция, формирующая страницу с облаком определённых тегов.
 createPageWithTagsCloud :: Tags 
